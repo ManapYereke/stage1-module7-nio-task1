@@ -9,14 +9,12 @@ import java.nio.file.Path;
 public class FileReader {
 
     public Profile getDataFromFile(File file) {
-        try {
-            Path filePath = file.toPath();
-            BufferedReader reader = Files.newBufferedReader(filePath);
+        Path filePath = file.toPath();
+        try (BufferedReader reader = Files.newBufferedReader(filePath)) {
             String name = reader.readLine().split(":")[1].trim();
             int age = Integer.parseInt(reader.readLine().split(":")[1].trim());
             String email = reader.readLine().split(":")[1].trim();
             long phone = Long.parseLong(reader.readLine().split(":")[1].trim());
-            reader.close();
             return new Profile(name, age, email, phone);
         } catch (IOException e) {
             e.printStackTrace();
